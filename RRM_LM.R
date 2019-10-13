@@ -10,8 +10,8 @@ sum(is.na(Hitters))                                                   #
 
 # set observations and responce datasets
 x = model.matrix(Salary~.,Hitters)[,-1]                               # produce the matrix of all abservation corresponding 19 predictors
-# "[,-1]" means remove the first coloum from the original matrix
-# additionally, the model.matrix can only take numerical, quantitative inputs
+                                                                      # "[,-1]" means remove the first coloum from the original matrix
+                                                                      # additionally, the model.matrix can only take numerical, quantitative inputs
 y = Hitters$Salary                                                    # set coloum Salary as responce
 
 # The Ridge Regression Model (RRM)
@@ -32,10 +32,10 @@ ridge.mod$lambda[60]                                                  # find val
 coef(ridge.mod)[,60]                                                  # check the coefficients with the 60th lambda
 
 predict(ridge.mod, s = 50, type = "coefficients")[1:20,]              # also, predict function can show the coefficients with any lambda within 
-# its range
-# s means the value of lambda to predict
-# type = "coefficients" computes the coefficients for s
-# [1:20,] show the results in row
+                                                                      # its range
+                                                                      # s means the value of lambda to predict
+                                                                      # type = "coefficients" computes the coefficients for s
+                                                                      # [1:20,] show the results in row
 
 # cross-validaion
 # set a random train-datasets and test-datasets
@@ -48,15 +48,15 @@ y.test = y[test]                                                      #
 ridge.mod = glmnet(x[train,],y[train],alpha = 0,lambda = grid,thresh = 1e-12)   # train the RRM with train-dataset
 
 ridge.pred = predict(ridge.mod,s = 4,newx = x[test,])                 # predict the test results with a small lambda value, s = 4    
-# argument newx is matrix of new values to predict
+                                                                      # argument newx is matrix of new values to predict
 mean((ridge.pred - y.test)^2)                                         # compute the MSE of test results
 
 ridge.pred = predict(ridge.mod,s = 1e10,newx = x[test,])              # predict the test results with a large lambda value, s = 1e10                  
 mean((ridge.pred - y.test)^2)                                         # compute the MSE of test results
 
 ridge.pred = predict(ridge.mod,s = 0,newx = x[test,],exact = T)       # predict the test results just in the least squares (no penalty)
-# argument exact is relevent only the lambda used to predict differd  
-# from the used in the original model
+                                                                      # argument exact is relevent only the lambda used to predict differd  
+                                                                      # from the used in the original model
 mean((ridge.pred - y.test)^2)                                         # compute the MSE of test results
 
 lm(y~x,subset = train)                                                # in general,the unpenalized least squares model
@@ -65,7 +65,7 @@ predict(ridge.mod,s = 0,exact = T,type = "coefficients")[1:20,]       # show the
 # find the best lambda
 set.seed(1)                                                           # recall the random sample data above
 cv.out = cv.glmnet(x[train,],y[train],alpha = 0)                      # cv.glmnet perform a CV function with 10-fold CV,
-# which can be also changed with argument nfolds
+                                                                      # which can be also changed with argument nfolds
 plot(cv.out)                                                          #  
 bestlam = cv.out$lambda.min                                           # find the lambda making the minimal MSE
 bestlam                                                               # show the best lambda 
@@ -87,7 +87,7 @@ dim(coef(lasso.mod))                                                  # check th
 # find the best lambda
 set.seed(1)                                                           # recall the random sample data above                   
 cv.out = cv.glmnet(x[train,],y[train],alpha = 1)                      # cv.glmnet perform a CV function with 10-fold CV,
-# which can be also changed with argument nfolds
+                                                                      # which can be also changed with argument nfolds
 plot(cv.out)                                                          #
 bestlam = cv.out$lambda.min                                           # find the lambda making the minimal MSE
 bestlam                                                               # show the best lambda
